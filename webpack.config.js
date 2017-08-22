@@ -3,7 +3,7 @@ const path = require('path')
 const htmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-const extractSASS = new ExtractTextPlugin('[name].[hash].css')
+const extractSASS = new ExtractTextPlugin('index.[hash].css')
 
 const PROD = process.env.NODE_ENV === 'production'
 
@@ -40,7 +40,7 @@ else{
 }
 
 let plugins = [
-  new htmlWebpackPlugin({ filename: 'index.html', template: 'src/main/index.html' })
+  new htmlWebpackPlugin({ filename: 'index.html', template: 'src/client/main/index.html' })
 ]
 
 if(PROD){
@@ -54,7 +54,7 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  entry: path.resolve(__dirname, 'src/main/index.jsx'),
+  entry: path.resolve(__dirname, 'src/client/main/index.jsx'),
   output: {
     path: path.resolve(__dirname, 'app'),
     filename: "bundle.[hash].js"

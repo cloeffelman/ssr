@@ -10,7 +10,7 @@
     "clean": "rm -rf app/*",
     "webpack": "cross-env NODE_ENV=production webpack -p",
     "build": "npm run clean && npm run webpack",
-    "express": "babel-node server --presets=es2015,react,stage-3",
+    "express": "babel-node src/server --presets=es2015,react,stage-3",
     "kill": "taskkill /f /im node*"
   },
   "dependencies": {
