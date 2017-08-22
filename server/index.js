@@ -1,20 +1,29 @@
 import express from 'express'
 import React from 'react'
+import {StaticRouter} from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
 import App from '../src/components/app'
 import template from './template'
+import Helmet from 'react-helmet'
 
 const server = express(),
   port = 3000
 
-server.use('/assets', express.static('assets'))
+server.use('/assets', express.static(__dirname + '/assets'))
 
 server.get('/', (req, res) => {
-  const appString = renderToString(<App/>)
+  const context = {}
+  const body = renderToString(
+    <StaticRouter location={req.url} context={context}>
+      <App/>
+    </StaticRouter>
+  )
+  const helmet = Helmet.renderStatic()
 
   res.send(template({
-    body: appString,
-    title: 'Test SSR'
+    body,
+    title: 'Test SSR',
+    helmet
   }))
 })
 

@@ -14,11 +14,6 @@ let rules = [
     exclude: [/node_modules/]
   },
   {
-    test: /\.scss$/,
-    use: extractSASS.extract(['css-loader', 'sass-loader']),
-    exclude: [/node_modules/]
-  },
-  {
     test: /\.css$/,
     use: ['style-loader', 'css-loader']
   },
@@ -29,9 +24,28 @@ let rules = [
   {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
 ]
 
+if(PROD){
+  rules.push({
+    test: /\.scss$/,
+    use: extractSASS.extract(['css-loader', 'sass-loader']),
+    exclude: [/node_modules/]
+  })
+}
+else{
+  rules.push({
+    test: /\.scss$/,
+    loader: 'style-loader!css-loader!sass-loader',
+    exclude: [/node_modules/]
+  })
+}
+
 let plugins = [
-  extractSASS
+  new htmlWebpackPlugin({ filename: 'index.html', template: 'src/main/index.html' })
 ]
+
+if(PROD){
+  plugins.push(extractSASS)
+}
 
 const config = {
   module: {
@@ -40,7 +54,6 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  plugins: plugins,
   entry: path.resolve(__dirname, 'src/main/index.jsx'),
   output: {
     path: path.resolve(__dirname, 'app'),
@@ -52,9 +65,7 @@ const config = {
     contentBase:  path.resolve(__dirname, 'app'),
     historyApiFallback: true
   },
-  plugins: [
-    new htmlWebpackPlugin({ filename: 'index.html', template: 'src/main/index.html' })
-  ]
+  plugins: plugins
 }
 
 module.exports = config
