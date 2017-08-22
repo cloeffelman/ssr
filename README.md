@@ -1,4 +1,4 @@
-# Server side render example
+# React - Isomorphic render example
 
 Example React js project with isomorphic rendering (server and client side). Also uses React Router v4 for routing and React Helmet for meta tags.
 
