@@ -11,7 +11,7 @@ const server = express(),
 
 server.use('/assets', express.static(__dirname + '/assets'))
 
-server.get('/', (req, res) => {
+server.get('*', (req, res) => {
   const context = {}
   const body = renderToString(
     <StaticRouter location={req.url} context={context}>
